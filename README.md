@@ -12,6 +12,9 @@ An OpenCode TUI plugin that adds skills to the session sidebar.
 opencode plugin add opencode-skills-dock
 ```
 
+Run `/reload` in OpenCode to load the plugin. The install command adds the
+package to the `plugins` array in your OpenCode CLI configuration.
+
 ## Develop locally
 
 Install [Bun](https://bun.sh/), then clone the repository and install dependencies:

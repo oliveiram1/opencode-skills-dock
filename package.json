@@ -1,11 +1,15 @@
 {
   "name": "opencode-skills-dock",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "OpenCode TUI plugin: Skills sidebar section (Global/Local groups, per-session usage, context %).",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oliveiram1/opencode-skills-dock.git"
+  },
+  "homepage": "https://github.com/oliveiram1/opencode-skills-dock#readme",
+  "bugs": {
+    "url": "https://github.com/oliveiram1/opencode-skills-dock/issues"
   },
   "type": "module",
   "files": [
