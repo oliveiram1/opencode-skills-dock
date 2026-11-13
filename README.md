@@ -15,8 +15,8 @@ Click **None**, **Scope**, or **Author** in the **Group By:** row to switch grou
 Install [Bun](https://bun.sh/), then clone the repository and install its dependencies:
 
 ```sh
-git clone https://github.com/oliveiram1/opencode-skills-dock-release.git
-cd opencode-skills-dock-release
+git clone https://github.com/oliveiram1/opencode-skills-dock.git
+cd opencode-skills-dock
 bun install --frozen-lockfile
 ```
 
