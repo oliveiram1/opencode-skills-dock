@@ -1,0 +1,41 @@
+{
+  "name": "opencode-skills-dock",
+  "version": "0.1.0",
+  "description": "OpenCode TUI plugin: Skills sidebar section (Global/Local groups, per-session usage, context %).",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oliveiram1/opencode-skills-dock-release.git"
+  },
+  "type": "module",
+  "files": [
+    "tui.tsx",
+    "src"
+  ],
+  "exports": {
+    "./tui": "./tui.tsx"
+  },
+  "scripts": {
+    "test": "bun --conditions=browser test",
+    "typecheck": "tsc --noEmit -p .",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "format:check": "biome format .",
+    "fallow": "fallow",
+    "fallow:cleanup": "fallow fix --dry-run"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.7",
+    "@opentui/core": "0.7.0",
+    "@opentui/solid": "latest",
+    "@types/bun": "latest",
+    "fallow": "^3.42.0",
+    "solid-js": "1.9.12",
+    "typescript": "latest"
+  },
+  "peerDependencies": {
+    "@opentui/core": ">=0.6.6",
+    "@opentui/solid": ">=0.6.6",
+    "solid-js": ">=1.9.0"
+  }
+}

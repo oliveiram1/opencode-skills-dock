@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.0
+      - run: bun install --frozen-lockfile
+      - run: bun run test
+      - run: bun run typecheck
+      - name: Check package contents
+        shell: bash
+        run: |
+          npm pack --pack-destination "$RUNNER_TEMP"
+          tar -tzf "$RUNNER_TEMP/opencode-skills-dock-$(node -p 'require("./package.json").version').tgz" > "$RUNNER_TEMP/package-files.txt"
+          grep -Fx 'package/tui.tsx' "$RUNNER_TEMP/package-files.txt"
+          grep -Fx 'package/package.json' "$RUNNER_TEMP/package-files.txt"
+          grep -Fx 'package/README.md' "$RUNNER_TEMP/package-files.txt"
+          grep -Fx 'package/LICENSE' "$RUNNER_TEMP/package-files.txt"
+          test "$(grep -c '^package/src/' "$RUNNER_TEMP/package-files.txt")" -gt 0
+          if grep -Ev '^package/(tui\.tsx|package\.json|README\.md|LICENSE[^/]*|src/.*)$' "$RUNNER_TEMP/package-files.txt"; then exit 1; fi
