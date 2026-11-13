@@ -1,5 +1,7 @@
 # OpenCode Skills Dock
 
+[![npm version](https://img.shields.io/npm/v/opencode-skills-dock)](https://www.npmjs.com/package/opencode-skills-dock)
+
 An [OpenCode](https://opencode.ai/) TUI plugin that puts your skills in the session sidebar. Browse available skills, see which ones are loaded, and use them without leaving your session.
 
 ![OpenCode Skills Dock highlighting the Skills section in the session sidebar](assets/skills-dock.png)
