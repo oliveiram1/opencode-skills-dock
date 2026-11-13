@@ -1,10 +1,12 @@
 # OpenCode Skills Dock
 
-An OpenCode TUI plugin that adds skills to the session sidebar.
+An [OpenCode](https://opencode.ai/) TUI plugin that puts your skills in the session sidebar. Browse available skills, see which ones are loaded, and use them without leaving your session.
+
+![OpenCode Skills Dock highlighting the Skills section in the session sidebar](assets/skills-dock.png)
 
 - Browse skills grouped by scope or author.
 - Use a skill, copy a request, or view its details.
-- See session usage and estimated context share.
+- See loaded and running skills, plus their estimated token count and context share.
 
 ## Install
 
@@ -14,6 +16,17 @@ opencode plugin add opencode-skills-dock
 
 Run `/reload` in OpenCode to load the plugin. The install command adds the
 package to the `plugins` array in your OpenCode CLI configuration.
+
+## Use the skills sidebar
+
+Open a session in OpenCode and find **Skills** in the sidebar. The section appears when skills are available.
+
+- Select **None**, **Scope**, or **Author** next to **Group By** to change how skills are organized.
+- Select a skill to use it in the current session, copy its `@` invocation, or view its details.
+- Expand or collapse the skills section and its groups to control what you see. In the ungrouped view, use **Inactive** to show or hide skills that are not loaded.
+- Loaded skills appear in bold. A running skill shows a spinner and a **running** label.
+
+The token count is an estimate based on skill content length, not a tokenizer measurement. The context percentage appears when the model's context limit is available.
 
 ## Develop locally
 
@@ -32,3 +45,7 @@ bun run test
 bun run typecheck
 bun run test:package
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development and contribution guidelines. This project is licensed under the [MIT license](LICENSE).
