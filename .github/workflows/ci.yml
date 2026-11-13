@@ -19,14 +19,14 @@ jobs:
       - run: bun install --frozen-lockfile
       - run: bun run test
       - run: bun run typecheck
+      - run: bun run test:package
       - name: Check package contents
         shell: bash
         run: |
           npm pack --pack-destination "$RUNNER_TEMP"
           tar -tzf "$RUNNER_TEMP/opencode-skills-dock-$(node -p 'require("./package.json").version').tgz" > "$RUNNER_TEMP/package-files.txt"
-          grep -Fx 'package/tui.tsx' "$RUNNER_TEMP/package-files.txt"
+          grep -Fx 'package/dist/tui.js' "$RUNNER_TEMP/package-files.txt"
           grep -Fx 'package/package.json' "$RUNNER_TEMP/package-files.txt"
           grep -Fx 'package/README.md' "$RUNNER_TEMP/package-files.txt"
           grep -Fx 'package/LICENSE' "$RUNNER_TEMP/package-files.txt"
-          test "$(grep -c '^package/src/' "$RUNNER_TEMP/package-files.txt")" -gt 0
-          if grep -Ev '^package/(tui\.tsx|package\.json|README\.md|LICENSE[^/]*|src/.*)$' "$RUNNER_TEMP/package-files.txt"; then exit 1; fi
+          if grep -Ev '^package/(dist/.*|package\.json|README\.md|LICENSE[^/]*)$' "$RUNNER_TEMP/package-files.txt"; then exit 1; fi
