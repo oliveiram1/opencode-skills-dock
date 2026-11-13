@@ -20,6 +20,7 @@
   },
   "scripts": {
     "build": "bun scripts/build.mjs",
+    "install:local": "node scripts/install-local.mjs",
     "prepack": "bun run build",
     "test": "bun --conditions=browser test",
     "test:package": "bun scripts/check-package.mjs",

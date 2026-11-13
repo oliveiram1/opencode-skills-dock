@@ -17,24 +17,20 @@ package to the `plugins` array in your OpenCode CLI configuration.
 
 ## Develop locally
 
-Install [Bun](https://bun.sh/), then clone the repository and install dependencies:
+Install [Bun](https://bun.sh/), then clone the repository:
 
 ```sh
 git clone https://github.com/oliveiram1/opencode-skills-dock.git
 cd opencode-skills-dock
-bun install --frozen-lockfile
-bun run build
 ```
 
-To load the local checkout, add its absolute path to the `plugins` array in `~/.config/opencode/cli.json` (or `$XDG_CONFIG_HOME/opencode/cli.json` if `XDG_CONFIG_HOME` is set):
+From the repository directory, run the installer script:
 
-```json
-{
-  "plugins": ["/absolute/path/to/opencode-skills-dock"]
-}
+```sh
+bun run install:local
 ```
 
-Keep any existing plugin entries. After editing the source, run `bun run build`, then `/reload` in OpenCode to load changes.
+The script installs dependencies, builds the TUI plugin, and adds this checkout to the `plugins` array in `~/.config/opencode/cli.json` (or `$XDG_CONFIG_HOME/opencode/cli.json` when set). It preserves other settings and plugin entries. Run `/reload` in OpenCode to load the plugin. After editing the source, run `bun run build` and `/reload` again.
 
 Run the checks with:
 
