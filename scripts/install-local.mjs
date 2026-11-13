@@ -1,6 +1,13 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { homedir } from "node:os";
+import {
+  existsSync,
+  mkdirSync,
+  mkdtempSync,
+  readFileSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
+import { homedir, tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -10,12 +17,21 @@ const configDirectory = join(
   "opencode",
 );
 const configFile = join(configDirectory, "cli.json");
+const cacheDirectory = join(
+  process.env.XDG_CACHE_HOME ?? join(homedir(), ".cache"),
+  "opencode-skills-dock",
+  "local",
+);
+const installedPackage = join(
+  cacheDirectory,
+  "node_modules",
+  "opencode-skills-dock",
+);
 
 execFileSync("bun", ["install", "--frozen-lockfile"], {
   cwd: root,
   stdio: "inherit",
 });
-execFileSync("bun", ["run", "build"], { cwd: root, stdio: "inherit" });
 
 const config = existsSync(configFile)
   ? JSON.parse(readFileSync(configFile, "utf8"))
@@ -28,11 +44,48 @@ if (!Array.isArray(config.plugins)) {
   config.plugins = [];
 }
 
-if (!config.plugins.includes(root)) config.plugins.push(root);
+const temporaryDirectory = mkdtempSync(join(tmpdir(), "skills-dock-pack-"));
+
+try {
+  const packed = JSON.parse(
+    execFileSync(
+      "npm",
+      ["pack", "--json", "--pack-destination", temporaryDirectory],
+      { cwd: root, encoding: "utf8", stdio: ["ignore", "pipe", "inherit"] },
+    ),
+  );
+  const tarball = join(temporaryDirectory, packed[0].filename);
+
+  mkdirSync(cacheDirectory, { recursive: true });
+  execFileSync(
+    "npm",
+    [
+      "install",
+      "--prefix",
+      cacheDirectory,
+      "--no-save",
+      "--no-package-lock",
+      "--ignore-scripts",
+      tarball,
+    ],
+    { cwd: root, stdio: "inherit" },
+  );
+} finally {
+  rmSync(temporaryDirectory, { recursive: true, force: true });
+}
+
+if (!existsSync(join(installedPackage, "package.json"))) {
+  throw new Error(`Package install did not create ${installedPackage}`);
+}
+
+config.plugins = config.plugins.filter((plugin) => plugin !== root);
+if (!config.plugins.includes(installedPackage)) {
+  config.plugins.push(installedPackage);
+}
 
 mkdirSync(configDirectory, { recursive: true });
 writeFileSync(configFile, `${JSON.stringify(config, null, 2)}\n`);
 
-console.log(`Built and added local plugin: ${root}`);
+console.log(`Installed packed plugin: ${installedPackage}`);
 console.log(`OpenCode config: ${configFile}`);
 console.log("Run /reload in OpenCode to load the plugin.");
