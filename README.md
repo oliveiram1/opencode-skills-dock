@@ -23,6 +23,7 @@ Install [Bun](https://bun.sh/), then clone the repository and install dependenci
 git clone https://github.com/oliveiram1/opencode-skills-dock.git
 cd opencode-skills-dock
 bun install --frozen-lockfile
+bun run build
 ```
 
 To load the local checkout, add its absolute path to the `plugins` array in `~/.config/opencode/cli.json` (or `$XDG_CONFIG_HOME/opencode/cli.json` if `XDG_CONFIG_HOME` is set):
@@ -33,11 +34,12 @@ To load the local checkout, add its absolute path to the `plugins` array in `~/.
 }
 ```
 
-Keep any existing plugin entries. Run `/reload` in OpenCode to load changes.
+Keep any existing plugin entries. After editing the source, run `bun run build`, then `/reload` in OpenCode to load changes.
 
 Run the checks with:
 
 ```sh
 bun run test
 bun run typecheck
+bun run test:package
 ```

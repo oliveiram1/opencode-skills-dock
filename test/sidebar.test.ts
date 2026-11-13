@@ -2,7 +2,9 @@ import { expect, test } from "bun:test";
 import "@opentui/solid/preload";
 import { testRender } from "@opentui/solid";
 
-const { default: plugin } = await import("../tui");
+const { default: plugin } = await import(
+  process.env.SKILLS_DOCK_TEST_ENTRY ?? "../tui"
+);
 
 test.each([false, true])(
   "clickable grouping and collapse state (storage: %s)",

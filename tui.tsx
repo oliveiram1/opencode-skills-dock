@@ -4,8 +4,8 @@
  * Adds a "Skills" section to the session sidebar (`sidebar.content` slot), modelled on the built-in MCP section:
  * switchable skill groups, per-session usage, and an estimated context-window share.
  *
- * Loaded directly as .tsx: OpenCode installs the OpenTUI Solid transform for external plugin files and maps
- * `@opentui/solid` / `solid-js` to the host's own copies, so no build step is needed.
+ * Compiled before publishing so installed packages do not rely on a TSX transform in node_modules.
+ * OpenCode maps `@opentui/solid` / `solid-js` imports to the host's own copies.
  */
 import {
   createEffect,

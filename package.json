@@ -13,14 +13,16 @@
   },
   "type": "module",
   "files": [
-    "tui.tsx",
-    "src"
+    "dist"
   ],
   "exports": {
-    "./tui": "./tui.tsx"
+    "./tui": "./dist/tui.js"
   },
   "scripts": {
+    "build": "bun scripts/build.mjs",
+    "prepack": "bun run build",
     "test": "bun --conditions=browser test",
+    "test:package": "bun scripts/check-package.mjs",
     "typecheck": "tsc --noEmit -p .",
     "lint": "biome lint .",
     "format": "biome format --write .",
